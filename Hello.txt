@@ -1,0 +1,25 @@
+package eduation;
+import java.io.IOException;
+//import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class MyMap extends Mapper<LongWritable, Text, Text, Text> {
+
+	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+
+		String line = value.toString();
+		String lineParts[] = line.split(",");
+		
+
+		String line2 = lineParts[3] + " " + lineParts[9];
+		String line3 = lineParts[17] + " " + lineParts[18];
+		String line4 = line2+line3;
+
+		if (lineParts[0].equals("2015-16")) {
+			context.write(new Text(lineParts[0]), new Text(line4));
+		}
+	}
+}
+
